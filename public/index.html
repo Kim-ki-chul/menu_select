@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>메뉴 결정장애 !!</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>메뉴 결정장애 !!</h1>
+
+    <section id="location-section">
+      <form id="location-form">
+        <input type="text" id="address-input" placeholder="예: 서울 강남구 테헤란로 123" required>
+        <button type="submit">위치 저장</button>
+        <button type="button" id="current-location-btn">📍 현 위치로 설정</button>
+      </form>
+      <p id="location-display" hidden></p>
+    </section>
+
+    <section id="weather-section" hidden>
+      <p id="weather-display"></p>
+    </section>
+
+    <section id="category-section" hidden>
+      <div id="category-buttons">
+        <button type="button" class="category-btn" data-category="아침">아침</button>
+        <button type="button" class="category-btn selected" data-category="점심">점심</button>
+        <button type="button" class="category-btn" data-category="저녁">저녁</button>
+        <button type="button" class="category-btn" data-category="회식">회식</button>
+      </div>
+    </section>
+
+    <section id="cuisine-section" hidden>
+      <div id="cuisine-buttons">
+        <button type="button" class="category-btn selected" data-cuisine="아무거나">아무거나</button>
+        <button type="button" class="category-btn" data-cuisine="한식">한식</button>
+        <button type="button" class="category-btn" data-cuisine="중식">중식</button>
+        <button type="button" class="category-btn" data-cuisine="일식">일식</button>
+        <button type="button" class="category-btn" data-cuisine="양식">양식</button>
+      </div>
+    </section>
+
+    <section id="radius-section" hidden>
+      <div id="radius-control">
+        <label>검색 반경 <span id="radius-value">500m</span></label>
+        <div id="radius-bubbles">
+          <div id="radius-line-bg"></div>
+          <div id="radius-line-fill"></div>
+          <button type="button" class="radius-bubble" data-radius="100"></button>
+          <button type="button" class="radius-bubble" data-radius="200"></button>
+          <button type="button" class="radius-bubble" data-radius="300"></button>
+          <button type="button" class="radius-bubble" data-radius="400"></button>
+          <button type="button" class="radius-bubble" data-radius="500"></button>
+          <button type="button" class="radius-bubble" data-radius="600"></button>
+          <button type="button" class="radius-bubble" data-radius="700"></button>
+          <button type="button" class="radius-bubble" data-radius="800"></button>
+          <button type="button" class="radius-bubble" data-radius="900"></button>
+          <button type="button" class="radius-bubble" data-radius="1000"></button>
+        </div>
+        <div id="radius-ticks">
+          <span>100m</span><span>200m</span><span>300m</span><span>400m</span><span>500m</span>
+          <span>600m</span><span>700m</span><span>800m</span><span>900m</span><span>1000m</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu-section" hidden>
+      <h2>오늘의 메뉴 후보 <button type="button" id="refresh-menu-btn">🔄 다시 추천</button></h2>
+      <p id="recommend-reason"></p>
+      <form id="menu-search-form">
+        <input type="text" id="menu-search-input" placeholder="다른 메뉴 직접 검색 (예: 삼겹살)">
+        <button type="submit">검색</button>
+      </form>
+      <div id="menu-candidates"></div>
+    </section>
+
+    <section id="restaurant-section" hidden>
+      <h2><span id="chosen-menu"></span> 맛집 5곳 <span id="radius-note"></span></h2>
+      <div id="restaurant-list"></div>
+    </section>
+
+    <section id="history-section" hidden>
+      <h2>최근 선택한 메뉴</h2>
+      <ul id="history-list"></ul>
+    </section>
+
+    <p id="error-message" hidden></p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

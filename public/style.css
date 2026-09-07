@@ -1,0 +1,306 @@
+:root {
+  --color-bg: #f5f6f8;
+  --color-surface: #ffffff;
+  --color-border: #e5e5ea;
+  --color-text: #1a1a1a;
+  --color-text-secondary: #6b6b70;
+  --color-text-muted: #9a9aa0;
+  --color-primary: #3b82f6;
+  --color-primary-soft: #eaf1ff;
+  --color-danger: #dc2626;
+  --color-danger-soft: #fdecec;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --gap-sm: 8px;
+  --gap-md: 16px;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, "Malgun Gothic", sans-serif;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 4px 0 24px;
+  text-align: center;
+  color: #000;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+h2 {
+  font-size: 15px;
+  margin: 0 0 12px;
+  color: var(--color-text);
+  font-weight: 700;
+}
+h2:has(#refresh-menu-btn) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 위치/날씨/메뉴/맛집 카드 공통 스타일 */
+main > section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 16px;
+  margin-bottom: var(--gap-md);
+  animation: fadeIn 0.35s ease;
+}
+
+button {
+  padding: 9px 14px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.12s ease, opacity 0.2s ease;
+}
+button:hover { opacity: 0.9; }
+button:active { transform: scale(0.96); }
+button:disabled { opacity: 0.5; cursor: default; }
+
+form { display: flex; gap: var(--gap-sm); flex-wrap: wrap; }
+input[type="text"] {
+  flex: 1;
+  min-width: 160px;
+  padding: 9px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+input[type="text"]:focus { outline: 2px solid var(--color-primary-soft); border-color: var(--color-primary); }
+
+#current-location-btn {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+#location-display {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+#weather-display {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+#category-buttons,
+#cuisine-buttons {
+  display: flex;
+  gap: 8px;
+}
+#cuisine-buttons .category-btn {
+  padding: 9px 6px;
+  font-size: 12px;
+}
+.category-btn {
+  flex: 1;
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+.category-btn.selected {
+  background: var(--color-primary);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* 아침/점심/저녁/회식 카테고리별 색 */
+.category-btn[data-category="아침"].selected { background: #f59e0b; }
+.category-btn[data-category="점심"].selected { background: #3b82f6; }
+.category-btn[data-category="저녁"].selected { background: #8b5cf6; }
+.category-btn[data-category="회식"].selected { background: #ef4444; }
+
+/* 한식/중식/일식/양식 음식 종류별 색 */
+.category-btn[data-cuisine="아무거나"].selected { background: #64748b; }
+.category-btn[data-cuisine="한식"].selected { background: #ef4444; }
+.category-btn[data-cuisine="중식"].selected { background: #f97316; }
+.category-btn[data-cuisine="일식"].selected { background: #ec4899; }
+.category-btn[data-cuisine="양식"].selected { background: #10b981; }
+
+#refresh-menu-btn {
+  font-size: 11px;
+  padding: 5px 10px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 8px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  font-weight: normal;
+}
+#menu-search-form { margin-bottom: 12px; }
+
+.menu-btn:last-child { margin-bottom: 0; }
+.menu-btn { transition: border-color 0.2s ease, transform 0.15s ease; }
+.menu-btn:hover { border-color: var(--color-primary); transform: translateY(-2px); }
+.menu-name { font-weight: 700; font-size: 14px; }
+
+.menu-preview {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.preview-photo {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.preview-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  line-height: 1.35;
+}
+.preview-name { font-size: 12px; color: var(--color-text); }
+.preview-rating { color: #e08a00; font-weight: 700; }
+
+.restaurant-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  margin-bottom: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--color-text);
+}
+.restaurant-card:last-child { margin-bottom: 0; }
+.restaurant-card { transition: border-color 0.2s ease, transform 0.15s ease; }
+.restaurant-card:hover { border-color: var(--color-primary); transform: translateY(-2px); }
+.card-photo {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.restaurant-card .name { font-weight: 700; font-size: 14px; }
+.restaurant-card .meta { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+
+#recommend-reason {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+#history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+#history-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+#history-list li:last-child { border-bottom: none; }
+
+#error-message {
+  color: var(--color-danger);
+  background: var(--color-danger-soft);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+#radius-note { font-size: 12px; color: var(--color-text-muted); font-weight: normal; }
+
+#radius-control {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+#radius-control label { font-weight: 600; color: var(--color-text); }
+#radius-value { color: var(--color-primary); font-weight: 700; }
+
+#radius-bubbles {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+  padding: 0 4px;
+  margin-top: 10px;
+}
+#radius-line-bg,
+#radius-line-fill {
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  height: 4px;
+  border-radius: 2px;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+#radius-line-bg { right: 4px; background: var(--color-border); }
+#radius-line-fill { width: 0; background: var(--color-primary); transition: width 0.25s ease; }
+
+.radius-bubble {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #c2c2c8;
+  background: var(--color-surface);
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+.radius-bubble.selected {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: scale(1.15);
+}
+
+#radius-ticks {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2px;
+  margin-top: 6px;
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
