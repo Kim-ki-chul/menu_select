@@ -60,15 +60,14 @@ app.get('/api/recommend', async (req, res) => {
   if (!data.lat) return res.status(400).json({ error: '먼저 위치를 등록해주세요.' });
 
   const { bucket, temp, connected } = await weather.getWeatherBucket(data.lat, data.lng);
-  const excludedMenu = menu.getLastMenu(data.history, category);
   const cuisineFallback = !menu.cuisineHasOptions(category, bucket, cuisine);
 
-  // 후보 풀 전체를 무작위 순서로 받아서, 실제로 주변에 식당이 있는 메뉴만 최대 3개까지 채운다
+  // 후보 풀 전체를 무작위 순서로 받아서, 실제로 주변에 식당이 있는 메뉴만 최대 5개까지 채운다
   // (식당이 하나도 없는 메뉴는 후보 자체에서 제외 — 상세 정보 없는 후보를 보여주지 않기 위함)
-  const pool = menu.getCandidateMenus(category, bucket, cuisine, data.history, 99);
+  const pool = menu.getCandidateMenus(category, bucket, cuisine, 99);
   const candidates = [];
   for (const name of pool) {
-    if (candidates.length >= 3) break;
+    if (candidates.length >= 5) break;
     const { places } = requestedRadius
       ? await kakao.searchAtFixedRadius(name, data.lat, data.lng, requestedRadius)
       : await kakao.searchRestaurants(name, data.lat, data.lng, 1);
@@ -78,7 +77,7 @@ app.get('/api/recommend', async (req, res) => {
     candidates.push({ menu: name, topRestaurant: { ...top, google: info } });
   }
 
-  res.json({ bucket, temp, weatherConnected: connected, category, cuisine, cuisineFallback, excludedMenu, candidates });
+  res.json({ bucket, temp, weatherConnected: connected, category, cuisine, cuisineFallback, candidates });
 });
 
 app.get('/api/photo', async (req, res) => {

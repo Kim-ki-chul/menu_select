@@ -55,14 +55,11 @@ function buildRecommendReason(data) {
   const weatherSource = data.weatherConnected
     ? `기상청 단기예보(현재 ${data.temp}도씨 · ${data.bucket})`
     : `기본 날씨 기준(${data.bucket}, 기상청 연동 안 됨)`;
-  const excludedPart = data.excludedMenu
-    ? ` 최근 추천 기록을 참고해 직전에 고르신 '${data.excludedMenu}'는 후보에서 제외했습니다.`
-    : ' 최근 추천 기록을 확인했지만 제외할 메뉴는 없었습니다.';
   const cuisinePart = data.cuisine && data.cuisine !== '아무거나' ? `(${data.cuisine})` : '';
   const fallbackPart = data.cuisineFallback
     ? ` 다만 '${data.category}'·${data.bucket} 날씨엔 '${data.cuisine}' 메뉴가 없어서 전체 메뉴 중에서 골랐습니다.`
     : '';
-  return `'${data.category}'${cuisinePart} 카테고리와 ${weatherSource}를 참고해 메뉴를 골랐습니다.${excludedPart}${fallbackPart}`;
+  return `'${data.category}'${cuisinePart} 카테고리와 ${weatherSource}를 참고해 메뉴를 골랐습니다.${fallbackPart}`;
 }
 
 // 식당 하나(카카오 정보 + 구글 별점/사진)를 우측 미리보기 블록 HTML로 렌더링
