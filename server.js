@@ -7,6 +7,7 @@ const weather = require('./lib/weather');
 const menu = require('./lib/menu');
 const naver = require('./lib/naver');
 const google = require('./lib/google');
+const stats = require('./lib/stats');
 
 const app = express();
 app.use(express.json());
@@ -15,6 +16,11 @@ app.use(express.static('public'));
 app.get('/api/history', (req, res) => {
   const data = store.load();
   res.json({ history: [...data.history].reverse().slice(0, 10) });
+});
+
+app.get('/api/stats', (req, res) => {
+  const data = store.load();
+  res.json(stats.aggregate(data.history));
 });
 
 app.get('/api/location', (req, res) => {

@@ -28,4 +28,4 @@
 
 ## 테스트
 
-- `npm test` (= `node test/menu.test.js`)로 메뉴 중복 제외 로직 확인.
+- `npm test` (= `test/menu.test.js` + `test/stats.test.js`)로 메뉴 후보 풀 구성 로직과 통계 집계 로직 확인.

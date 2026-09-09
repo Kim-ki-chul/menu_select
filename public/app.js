@@ -25,6 +25,9 @@ const radiusValueEl = document.getElementById('radius-value');
 const restaurantList = document.getElementById('restaurant-list');
 const historySection = document.getElementById('history-section');
 const historyList = document.getElementById('history-list');
+const statsSection = document.getElementById('stats-section');
+const statsTotal = document.getElementById('stats-total');
+const statsBars = document.getElementById('stats-bars');
 const errorMessage = document.getElementById('error-message');
 
 let currentMenu = null;
@@ -87,6 +90,28 @@ async function loadHistory() {
     });
   }
   historySection.hidden = false;
+  await loadStats();
+}
+
+async function loadStats() {
+  const res = await fetch('/api/stats');
+  const data = await res.json();
+  statsTotal.textContent = `(최근 ${data.total}회)`;
+  statsBars.innerHTML = '';
+  if (data.byMenu.length === 0) {
+    statsBars.textContent = '아직 통계를 낼 데이터가 없습니다.';
+  } else {
+    const max = data.byMenu[0].count;
+    data.byMenu.forEach(({ name, count }) => {
+      const row = document.createElement('div');
+      row.className = 'stats-row';
+      row.innerHTML = `<span class="stats-label">${name}</span>
+        <span class="stats-track"><span class="stats-fill" style="width:${(count / max) * 100}%"></span></span>
+        <span class="stats-count">${count}</span>`;
+      statsBars.appendChild(row);
+    });
+  }
+  statsSection.hidden = false;
 }
 
 async function loadLocation() {

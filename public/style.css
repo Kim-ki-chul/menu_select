@@ -238,6 +238,27 @@ input[type="text"]:focus { outline: 2px solid var(--color-primary-soft); border-
 }
 #history-list li:last-child { border-bottom: none; }
 
+#stats-total { font-size: 12px; font-weight: normal; color: var(--color-text-muted); }
+
+.stats-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+.stats-row:last-child { margin-bottom: 0; }
+.stats-label { width: 56px; flex-shrink: 0; color: var(--color-text-secondary); }
+.stats-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--color-bg);
+  overflow: hidden;
+}
+.stats-fill { display: block; height: 100%; background: var(--color-primary); border-radius: 4px; }
+.stats-count { width: 20px; flex-shrink: 0; text-align: right; color: var(--color-text-muted); }
+
 #error-message {
   color: var(--color-danger);
   background: var(--color-danger-soft);
