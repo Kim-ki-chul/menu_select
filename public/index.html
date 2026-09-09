@@ -8,9 +8,21 @@
 </head>
 <body>
   <header id="top-bar">
-    <h1>메뉴 결정장애 !!</h1>
+    <div id="top-bar-row">
+      <h1>메뉴 결정장애 !!</h1>
+      <div id="top-bar-icons">
+        <label id="auto-toggle" title="10분마다 자동으로 메뉴 재추천">
+          <input type="checkbox" id="auto-toggle-input">
+          <span>AUTO</span>
+        </label>
+        <button type="button" id="search-icon-btn" title="메뉴 검색">🔍</button>
+        <button type="button" id="settings-icon-btn" title="설정">⚙️</button>
+      </div>
+    </div>
   </header>
   <main>
+    <p id="settings-summary" hidden></p>
+
     <section id="location-section">
       <form id="location-form">
         <input type="text" id="address-input" placeholder="예: 서울 강남구 테헤란로 123" required>
@@ -24,48 +36,50 @@
       <p id="weather-display"></p>
     </section>
 
-    <section id="category-section" hidden>
-      <div id="category-buttons">
-        <button type="button" class="category-btn" data-category="아침">아침</button>
-        <button type="button" class="category-btn selected" data-category="점심">점심</button>
-        <button type="button" class="category-btn" data-category="저녁">저녁</button>
-        <button type="button" class="category-btn" data-category="회식">회식</button>
-      </div>
-    </section>
-
-    <section id="cuisine-section" hidden>
-      <div id="cuisine-buttons">
-        <button type="button" class="category-btn selected" data-cuisine="아무거나">아무거나</button>
-        <button type="button" class="category-btn" data-cuisine="한식">한식</button>
-        <button type="button" class="category-btn" data-cuisine="중식">중식</button>
-        <button type="button" class="category-btn" data-cuisine="일식">일식</button>
-        <button type="button" class="category-btn" data-cuisine="양식">양식</button>
-      </div>
-    </section>
-
-    <section id="radius-section" hidden>
-      <div id="radius-control">
-        <label>검색 반경 <span id="radius-value">500m</span></label>
-        <div id="radius-bubbles">
-          <div id="radius-line-bg"></div>
-          <div id="radius-line-fill"></div>
-          <button type="button" class="radius-bubble" data-radius="100"></button>
-          <button type="button" class="radius-bubble" data-radius="200"></button>
-          <button type="button" class="radius-bubble" data-radius="300"></button>
-          <button type="button" class="radius-bubble" data-radius="400"></button>
-          <button type="button" class="radius-bubble" data-radius="500"></button>
-          <button type="button" class="radius-bubble" data-radius="600"></button>
-          <button type="button" class="radius-bubble" data-radius="700"></button>
-          <button type="button" class="radius-bubble" data-radius="800"></button>
-          <button type="button" class="radius-bubble" data-radius="900"></button>
-          <button type="button" class="radius-bubble" data-radius="1000"></button>
+    <div id="settings-group">
+      <section id="category-section" hidden>
+        <div id="category-buttons">
+          <button type="button" class="category-btn" data-category="아침">아침</button>
+          <button type="button" class="category-btn selected" data-category="점심">점심</button>
+          <button type="button" class="category-btn" data-category="저녁">저녁</button>
+          <button type="button" class="category-btn" data-category="회식">회식</button>
         </div>
-        <div id="radius-ticks">
-          <span>100m</span><span>200m</span><span>300m</span><span>400m</span><span>500m</span>
-          <span>600m</span><span>700m</span><span>800m</span><span>900m</span><span>1000m</span>
+      </section>
+
+      <section id="cuisine-section" hidden>
+        <div id="cuisine-buttons">
+          <button type="button" class="category-btn selected" data-cuisine="아무거나">아무거나</button>
+          <button type="button" class="category-btn" data-cuisine="한식">한식</button>
+          <button type="button" class="category-btn" data-cuisine="중식">중식</button>
+          <button type="button" class="category-btn" data-cuisine="일식">일식</button>
+          <button type="button" class="category-btn" data-cuisine="양식">양식</button>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section id="radius-section" hidden>
+        <div id="radius-control">
+          <label>검색 반경 <span id="radius-value">500m</span></label>
+          <div id="radius-bubbles">
+            <div id="radius-line-bg"></div>
+            <div id="radius-line-fill"></div>
+            <button type="button" class="radius-bubble" data-radius="100"></button>
+            <button type="button" class="radius-bubble" data-radius="200"></button>
+            <button type="button" class="radius-bubble" data-radius="300"></button>
+            <button type="button" class="radius-bubble" data-radius="400"></button>
+            <button type="button" class="radius-bubble" data-radius="500"></button>
+            <button type="button" class="radius-bubble" data-radius="600"></button>
+            <button type="button" class="radius-bubble" data-radius="700"></button>
+            <button type="button" class="radius-bubble" data-radius="800"></button>
+            <button type="button" class="radius-bubble" data-radius="900"></button>
+            <button type="button" class="radius-bubble" data-radius="1000"></button>
+          </div>
+          <div id="radius-ticks">
+            <span>100m</span><span>200m</span><span>300m</span><span>400m</span><span>500m</span>
+            <span>600m</span><span>700m</span><span>800m</span><span>900m</span><span>1000m</span>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <section id="menu-section" hidden>
       <h2>오늘의 메뉴 후보 <button type="button" id="refresh-menu-btn">🔄 다시 추천</button></h2>

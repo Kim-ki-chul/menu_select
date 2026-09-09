@@ -30,6 +30,14 @@ const statsTotal = document.getElementById('stats-total');
 const statsBars = document.getElementById('stats-bars');
 const errorMessage = document.getElementById('error-message');
 const scrollTopBtn = document.getElementById('scroll-top-btn');
+const searchIconBtn = document.getElementById('search-icon-btn');
+const settingsIconBtn = document.getElementById('settings-icon-btn');
+const settingsGroup = document.getElementById('settings-group');
+const settingsSummary = document.getElementById('settings-summary');
+const autoToggleInput = document.getElementById('auto-toggle-input');
+
+const AUTO_REFRESH_MS = 10 * 60 * 1000; // AUTO 토글 on일 때 재추천 주기
+let autoRefreshTimer = null;
 
 let currentMenu = null;
 let currentRadius = 500;
@@ -47,6 +55,16 @@ function selectRadiusBubble(value) {
   const selectedIndex = Array.from(radiusBubbles).findIndex((b) => Number(b.dataset.radius) === currentRadius);
   const fraction = selectedIndex / (radiusBubbles.length - 1);
   radiusLineFill.style.width = `calc((100% - 8px) * ${fraction})`;
+}
+
+// 설정(카테고리/음식종류/반경) 영역을 접고, 대신 현재 값을 한 줄 요약으로 보여준다
+function toggleSettings() {
+  const willCollapse = !settingsGroup.hidden;
+  settingsGroup.hidden = willCollapse;
+  settingsSummary.hidden = !willCollapse;
+  if (willCollapse) {
+    settingsSummary.textContent = `${currentCategory} · ${currentCuisine} · 반경 ${currentRadius}m (탭해서 변경)`;
+  }
 }
 
 function showError(msg) {
@@ -285,5 +303,24 @@ currentLocationBtn.addEventListener('click', () => {
 });
 
 scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+searchIconBtn.addEventListener('click', () => {
+  const target = !menuSection.hidden ? menuSearchInput : addressInput;
+  target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  target.focus();
+});
+
+settingsIconBtn.addEventListener('click', toggleSettings);
+settingsSummary.addEventListener('click', toggleSettings);
+
+autoToggleInput.addEventListener('change', () => {
+  clearInterval(autoRefreshTimer);
+  if (!autoToggleInput.checked) return;
+  autoRefreshTimer = setInterval(async () => {
+    const menuToReload = currentMenu;
+    await loadRecommendation(currentRadius);
+    if (menuToReload) await loadRestaurants(menuToReload, currentRadius);
+  }, AUTO_REFRESH_MS);
+});
 
 loadLocation();

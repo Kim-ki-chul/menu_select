@@ -40,13 +40,53 @@ body {
   border-bottom: 1px solid var(--color-border);
   z-index: 20;
 }
+#top-bar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+#top-bar-row h1 { flex: 1; }
+#top-bar-icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+#search-icon-btn,
+#settings-icon-btn {
+  padding: 4px 8px;
+  background: none;
+  font-size: 16px;
+}
+#auto-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+#auto-toggle:has(input:checked) { color: var(--color-primary); }
+#auto-toggle-input { accent-color: var(--color-primary); cursor: pointer; }
+
+#settings-summary {
+  margin: 0 0 var(--gap-md);
+  padding: 10px 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
 
 h1 {
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.5px;
   margin: 0;
-  text-align: center;
   color: #000;
 }
 
@@ -87,7 +127,8 @@ h2:has(#refresh-menu-btn) {
 }
 
 /* 위치/날씨/메뉴/맛집 카드 공통 스타일 */
-main > section {
+main > section,
+#settings-group > section {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
