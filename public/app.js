@@ -29,6 +29,7 @@ const statsSection = document.getElementById('stats-section');
 const statsTotal = document.getElementById('stats-total');
 const statsBars = document.getElementById('stats-bars');
 const errorMessage = document.getElementById('error-message');
+const scrollTopBtn = document.getElementById('scroll-top-btn');
 
 let currentMenu = null;
 let currentRadius = 500;
@@ -282,5 +283,7 @@ currentLocationBtn.addEventListener('click', () => {
     }
   );
 });
+
+scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 loadLocation();

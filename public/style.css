@@ -22,19 +22,51 @@ body {
   font-family: -apple-system, "Malgun Gothic", sans-serif;
   max-width: 480px;
   margin: 0 auto;
-  padding: 24px 16px 48px;
+  padding: 76px 16px 64px;
   background: var(--color-bg);
   color: var(--color-text);
   line-height: 1.5;
 }
 
+#top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 20;
+}
+
 h1 {
-  font-size: 30px;
+  font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.5px;
-  margin: 4px 0 24px;
+  margin: 0;
   text-align: center;
   color: #000;
+}
+
+#bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+  z-index: 20;
+}
+#scroll-top-btn {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  width: 100%;
 }
 
 @keyframes fadeIn {
