@@ -84,6 +84,19 @@ function buildRecommendReason(data) {
   return `'${data.category}'${cuisinePart} 카테고리와 ${weatherSource}를 참고해 메뉴를 골랐습니다.${fallbackPart}`;
 }
 
+// 카드에 실린 정보가 어느 API에서 왔는지 출처 뱃지로 표시 (카카오=기본, 구글/관광공사=값 있을 때만)
+function renderSourceBadges(restaurant) {
+  const g = restaurant.google;
+  const hasGoogle = !!g && (g.rating || g.reviewCount || g.photoUrl || g.priceLevel || g.summary || g.openNow !== null);
+  const t = restaurant.tour;
+  const hasTour = !!t && (t.firstMenu || t.treatMenu);
+
+  const badges = ['<span class="badge badge-kakao">카카오</span>'];
+  if (hasGoogle) badges.push('<span class="badge badge-google">구글</span>');
+  if (hasTour) badges.push('<span class="badge badge-tour">관광공사</span>');
+  return `<div class="source-badges">${badges.join('')}</div>`;
+}
+
 // 식당 하나(카카오 정보 + 구글 별점/사진)를 우측 미리보기 블록 HTML로 렌더링
 function renderPreview(restaurant) {
   if (!restaurant) return '';
@@ -216,7 +229,7 @@ async function loadRestaurants(menuName, radius) {
       a.href = r.url;
       a.target = '_blank';
       a.rel = 'noopener';
-      a.innerHTML = `${photo}<div class="card-text"><div class="name">${r.name} ${rating}</div><div class="meta">${r.address} · ${r.distance}m${reviews}${priceLevel}</div>${summary}${tourMenu}${hours}</div>`;
+      a.innerHTML = `${photo}<div class="card-text"><div class="name">${r.name} ${rating}</div><div class="meta">${r.address} · ${r.distance}m${reviews}${priceLevel}</div>${summary}${tourMenu}${hours}${renderSourceBadges(r)}</div>`;
       restaurantList.appendChild(a);
     });
   }
