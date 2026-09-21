@@ -294,6 +294,7 @@ input[type="text"]:focus { outline: 2px solid var(--color-primary-soft); border-
   object-fit: cover;
   flex-shrink: 0;
 }
+.card-text { flex: 1; min-width: 0; }
 .name-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .restaurant-card .name { font-weight: 700; font-size: 14px; }
 .restaurant-card .meta { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
