@@ -229,7 +229,7 @@ async function loadRestaurants(menuName, radius) {
       a.href = r.url;
       a.target = '_blank';
       a.rel = 'noopener';
-      a.innerHTML = `${photo}<div class="card-text"><div class="name">${r.name} ${rating}</div><div class="meta">${r.address} · ${r.distance}m${reviews}${priceLevel}</div>${summary}${tourMenu}${hours}${renderSourceBadges(r)}</div>`;
+      a.innerHTML = `${photo}<div class="card-text"><div class="name-row"><div class="name">${r.name} ${rating}</div>${renderSourceBadges(r)}</div><div class="meta">${r.address} · ${r.distance}m${reviews}${priceLevel}</div>${summary}${tourMenu}${hours}</div>`;
       restaurantList.appendChild(a);
     });
   }

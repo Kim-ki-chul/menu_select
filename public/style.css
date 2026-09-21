@@ -294,6 +294,7 @@ input[type="text"]:focus { outline: 2px solid var(--color-primary-soft); border-
   object-fit: cover;
   flex-shrink: 0;
 }
+.name-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .restaurant-card .name { font-weight: 700; font-size: 14px; }
 .restaurant-card .meta { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
 .restaurant-card .summary { font-size: 12px; color: var(--color-text-muted); margin-top: 2px; }
@@ -301,7 +302,7 @@ input[type="text"]:focus { outline: 2px solid var(--color-primary-soft); border-
 .hours.open { color: #1a9c4e; }
 .hours.closed { color: var(--color-danger); }
 
-.source-badges { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.source-badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
 .badge {
   font-size: 10px;
   font-weight: 700;
