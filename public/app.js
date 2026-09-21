@@ -201,12 +201,18 @@ async function loadRestaurants(menuName, radius) {
       const photo = g?.photoUrl ? `<img class="card-photo" src="${g.photoUrl}" alt="">` : '';
       const rating = g?.rating ? `★${g.rating.toFixed(1)}` : '';
       const reviews = g?.reviewCount ? ` · 리뷰 ${g.reviewCount}` : '';
+      const priceLevel = g?.priceLevel ? ` · ${g.priceLevel}` : '';
+      const summary = g?.summary ? `<div class="summary">${g.summary}</div>` : '';
+      const tourMenu = r.tour?.firstMenu ? `<div class="summary">대표메뉴: ${r.tour.firstMenu}</div>` : '';
+      const hours = g?.openNow !== null && g?.openNow !== undefined
+        ? `<div class="hours ${g.openNow ? 'open' : 'closed'}">${g.openNow ? '영업중' : '영업종료'}${g.todayHours ? ` · ${g.todayHours}` : ''}</div>`
+        : '';
       const a = document.createElement('a');
       a.className = 'restaurant-card';
       a.href = r.url;
       a.target = '_blank';
       a.rel = 'noopener';
-      a.innerHTML = `${photo}<div class="card-text"><div class="name">${r.name} ${rating}</div><div class="meta">${r.address} · ${r.distance}m${reviews}</div></div>`;
+      a.innerHTML = `${photo}<div class="card-text"><div class="name">${r.name} ${rating}</div><div class="meta">${r.address} · ${r.distance}m${reviews}${priceLevel}</div>${summary}${tourMenu}${hours}</div>`;
       restaurantList.appendChild(a);
     });
   }

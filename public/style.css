@@ -291,6 +291,10 @@ input[type="text"]:focus { outline: 2px solid var(--color-primary-soft); border-
 }
 .restaurant-card .name { font-weight: 700; font-size: 14px; }
 .restaurant-card .meta { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+.restaurant-card .summary { font-size: 12px; color: var(--color-text-muted); margin-top: 2px; }
+.restaurant-card .hours { font-size: 12px; margin-top: 2px; }
+.hours.open { color: #1a9c4e; }
+.hours.closed { color: var(--color-danger); }
 
 #recommend-reason {
   margin: 0 0 12px;

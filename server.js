@@ -7,6 +7,7 @@ const weather = require('./lib/weather');
 const menu = require('./lib/menu');
 const naver = require('./lib/naver');
 const google = require('./lib/google');
+const tourapi = require('./lib/tourapi');
 const stats = require('./lib/stats');
 
 const app = express();
@@ -112,7 +113,12 @@ app.get('/api/restaurants', async (req, res) => {
       ? await kakao.searchAtFixedRadius(selectedMenu, data.lat, data.lng, requestedRadius)
       : await kakao.searchRestaurants(selectedMenu, data.lat, data.lng);
     const ranked = await naver.rankByPopularity(places);
-    const top5 = await google.attachPlaceInfo(ranked.slice(0, 5), data.lat, data.lng);
+    const top5Base = ranked.slice(0, 5);
+    const [withGoogle, withTour] = await Promise.all([
+      google.attachPlaceInfo(top5Base, data.lat, data.lng),
+      tourapi.attachMenuInfo(top5Base, data.lat, data.lng, radiusUsed),
+    ]);
+    const top5 = top5Base.map((r, i) => ({ ...r, google: withGoogle[i].google, tour: withTour[i].tour }));
 
     await store.save({ ...data, history: menu.recordChoice(data.history, category, selectedMenu) });
     res.json({ menu: selectedMenu, radiusUsed, restaurants: top5 });
