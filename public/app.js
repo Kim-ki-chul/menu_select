@@ -170,6 +170,7 @@ async function loadRecommendation(radius) {
     data.candidates.forEach((c) => {
       const btn = document.createElement('button');
       btn.className = 'menu-btn';
+      btn.dataset.menu = c.menu;
       btn.innerHTML = `<span class="menu-name">${c.menu}</span>${renderPreview(c.topRestaurant)}`;
       btn.addEventListener('click', () => loadRestaurants(c.menu));
       menuCandidates.appendChild(btn);
@@ -183,6 +184,9 @@ async function loadRecommendation(radius) {
 async function loadRestaurants(menuName, radius) {
   showError('');
   currentMenu = menuName;
+  menuCandidates.querySelectorAll('.menu-btn').forEach((btn) => {
+    btn.classList.toggle('selected', btn.dataset.menu === menuName);
+  });
   const params = new URLSearchParams({ menu: menuName, category: currentCategory });
   if (radius) params.set('radius', radius);
   const res = await fetch(`/api/restaurants?${params}`);
