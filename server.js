@@ -13,18 +13,18 @@ const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 
-app.get('/api/history', (req, res) => {
-  const data = store.load();
+app.get('/api/history', async (req, res) => {
+  const data = await store.load();
   res.json({ history: [...data.history].reverse().slice(0, 10) });
 });
 
-app.get('/api/stats', (req, res) => {
-  const data = store.load();
+app.get('/api/stats', async (req, res) => {
+  const data = await store.load();
   res.json(stats.aggregate(data.history));
 });
 
-app.get('/api/location', (req, res) => {
-  const data = store.load();
+app.get('/api/location', async (req, res) => {
+  const data = await store.load();
   res.json({ address: data.address, lat: data.lat, lng: data.lng });
 });
 
@@ -34,8 +34,8 @@ app.post('/api/location', async (req, res) => {
 
   try {
     const { lat, lng } = await kakao.geocodeAddress(address);
-    const data = store.load();
-    store.save({ ...data, address, lat, lng });
+    const data = await store.load();
+    await store.save({ ...data, address, lat, lng });
     res.json({ address, lat, lng });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -50,8 +50,8 @@ app.post('/api/location/current', async (req, res) => {
 
   try {
     const address = await kakao.reverseGeocode(lat, lng);
-    const data = store.load();
-    store.save({ ...data, address, lat, lng });
+    const data = await store.load();
+    await store.save({ ...data, address, lat, lng });
     res.json({ address, lat, lng });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -62,7 +62,7 @@ app.get('/api/recommend', async (req, res) => {
   const requestedRadius = Number(req.query.radius);
   const category = req.query.category || '점심';
   const cuisine = req.query.cuisine || '아무거나';
-  const data = store.load();
+  const data = await store.load();
   if (!data.lat) return res.status(400).json({ error: '먼저 위치를 등록해주세요.' });
 
   const { bucket, temp, connected } = await weather.getWeatherBucket(data.lat, data.lng);
@@ -104,7 +104,7 @@ app.get('/api/restaurants', async (req, res) => {
 
   const requestedRadius = Number(req.query.radius);
   const category = req.query.category || '점심';
-  const data = store.load();
+  const data = await store.load();
   if (!data.lat) return res.status(400).json({ error: '먼저 위치를 등록해주세요.' });
 
   try {
@@ -114,12 +114,16 @@ app.get('/api/restaurants', async (req, res) => {
     const ranked = await naver.rankByPopularity(places);
     const top5 = await google.attachPlaceInfo(ranked.slice(0, 5), data.lat, data.lng);
 
-    store.save({ ...data, history: menu.recordChoice(data.history, category, selectedMenu) });
+    await store.save({ ...data, history: menu.recordChoice(data.history, category, selectedMenu) });
     res.json({ menu: selectedMenu, radiusUsed, restaurants: top5 });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
+}
+
+module.exports = app;
