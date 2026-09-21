@@ -301,7 +301,7 @@ input[type="text"]:focus { outline: 2px solid var(--color-primary-soft); border-
 .hours.open { color: #1a9c4e; }
 .hours.closed { color: var(--color-danger); }
 
-.source-badges { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+.source-badges { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; justify-content: flex-end; }
 .badge {
   font-size: 10px;
   font-weight: 700;
